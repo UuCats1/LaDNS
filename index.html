@@ -1,1 +1,792 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>JumpStyle - LaDNS Servers</title>\n    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nes.css/latest/nes.min.css">\n    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">\n</head>\n<body class="bg-light">\n    <div class="container">\n        <header class="my-4">\n            <h1 class="text-center">Welcome to LaDNS Servers</h1>\n        </header>\n        <section class="my-4">\n            <h2>About LaDNS</h2>\n            <p>LaDNS is your reliable DNS service, providing...</p>\n        </section>\n        <section class="my-4">\n            <h2>Download</h2>\n            <button class="nes-btn is-primary">Download LaDNS</button>\n        </section>\n        <section class="my-4">\n            <h2>BoxLi DNS Servers Information</h2>\n            <p>1. DNS Server 1: xxx.xxx.xxx.xxx</p>\n            <p>2. DNS Server 2: xxx.xxx.xxx.xxx</p>\n            <p>3. DNS Server 3: xxx.xxx.xxx.xxx</p>\n        </section>\n        <footer class="mt-5 text-center">\n            <p>© 2026 LaDNS. All rights reserved. | Beian No: [Your Beian Number]</p>\n        </footer>\n    </div>\n    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>\n    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>\n    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JumpStyle - LasDNS Servers</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Material Symbols Rounded -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+
+    <style>
+        /* 
+         * Bing Wallpaper API Integration (Fixed)
+         * 1. Simplified to direct URL assignment to avoid CORS issues.
+         * 2. Added overlay for better text readability.
+         */
+
+        :root {
+            --primary: #D0BCFF;
+            --primary-glow: rgba(208, 188, 255, 0.6);
+            --accent: #00E5FF;
+            --accent-glow: rgba(0, 229, 255, 0.6);
+            
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.2);
+            
+            --text-main: #FFFFFF;
+            --text-sub: #B0B0C0;
+            
+            --radius-lg: 32px;
+            --radius-md: 24px;
+            --radius-sm: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Google Sans', 'Roboto', sans-serif;
+            background-color: #050508;
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 
+         * Bing Wallpaper Background Layer
+         */
+        .bing-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: opacity 1s ease;
+            opacity: 0; /* Hidden until loaded */
+        }
+        
+        /* Dark Overlay to ensure text readability */
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: rgba(5, 5, 8, 0.85); /* Darken the Bing image */
+            backdrop-filter: blur(5px); /* Slight blur for glass effect */
+        }
+
+        /* Aurora Blobs (Optional: kept for extra ambiance on top of wallpaper) */
+        .aurora-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            z-index: -1;
+            pointer-events: none;
+            animation: floatAurora 20s infinite ease-in-out;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #4C1D95; animation-delay: 0s; }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: #DB2777; animation-delay: -5s; }
+
+        @keyframes floatAurora {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* Glassmorphism Base */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Top App Bar */
+        .top-app-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 clamp(20px, 5%, 40px);
+            z-index: 100;
+            background: rgba(5, 5, 8, 0.6);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+        .logo span {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        /* Main Layout */
+        .main-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px clamp(20px, 5%, 40px) 60px;
+            display: grid;
+            gap: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            align-items: start;
+        }
+
+        /* Hero */
+        .hero {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 0 40px;
+            position: relative;
+            opacity: 0;
+            animation: smoothEntry 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 0.4s;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #fff, var(--primary), #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shineText 3s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(208, 188, 255, 0.4));
+        }
+        @keyframes shineText {
+            to { background-position: 200% center; }
+        }
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-sub);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Card Component */
+        .card {
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            
+            opacity: 0;
+            animation: smoothEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        
+        .card:nth-child(2) { animation-delay: 0.6s; }
+        .card:nth-child(3) { animation-delay: 0.8s; }
+
+        /* Beam Effect */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 40%,
+                rgba(255, 255, 255, 0.05) 50%,
+                rgba(255, 255, 255, 0) 60%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: beamMove 6s infinite linear;
+            pointer-events: none;
+        }
+        @keyframes beamMove {
+            0% { transform: rotate(30deg) translateY(-100%); }
+            100% { transform: rotate(30deg) translateY(100%); }
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 0 30px rgba(208, 188, 255, 0.15), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(208, 188, 255, 0.2);
+            transition: 0.3s;
+        }
+        .card:hover .card-icon {
+            box-shadow: 0 0 25px rgba(208, 188, 255, 0.5);
+            transform: scale(1.05);
+        }
+        .card-icon .material-symbols-rounded {
+            font-size: 32px;
+        }
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 56px;
+            padding: 0 32px;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            z-index: 1;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-dim) 0%, #9333ea 100%);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 40px rgba(147, 51, 234, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(208, 188, 255, 0.2);
+        }
+
+        /* Progress Bar */
+        .progress-wrapper {
+            margin-top: 24px;
+            padding: 20px;
+            border-radius: var(--radius-sm);
+            display: none;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(208, 188, 255, 0.5);
+        }
+
+        .loader-container {
+            position: relative;
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .loader-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 6px;
+            position: relative;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .loader-bar::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.8) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: translateX(-100%);
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+
+        /* DNS List */
+        .dns-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .dns-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
+            padding: 18px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .dns-item:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(208, 188, 255, 0.15);
+            transform: translateX(5px);
+        }
+        .dns-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+        .dns-item:hover .dns-icon {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+        .dns-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .dns-label {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .dns-value {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95rem;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .copy-icon {
+            color: var(--text-sub);
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+        .dns-item:hover .copy-icon {
+            opacity: 1;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            grid-column: 1 / -1;
+            margin-top: 40px;
+            opacity: 0;
+            animation: smoothEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 1s;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .load-time {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(20, 20, 25, 0.9);
+            backdrop-filter: blur(20px);
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: var(--radius-full);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 320px;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        @keyframes smoothEntry {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Bing Wallpaper Background -->
+    <div id="bing-bg" class="bing-bg"></div>
+    <!-- Dark Overlay -->
+    <div class="bg-overlay"></div>
+    
+    <!-- Ambient Blobs (Optional visual flair) -->
+    <div class="aurora-blob blob-1"></div>
+    <div class="aurora-blob blob-2"></div>
+
+    <!-- Navigation -->
+    <nav class="top-app-bar">
+        <div class="logo">
+            <span class="material-symbols-rounded">dns</span>
+            JumpStyle
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        
+        <!-- Hero -->
+        <div class="hero">
+            <h1>LasDNS Servers</h1>
+            <p>极速、安全、隐私优先的下一代 DNS 解析服务。<br>沉浸式炫光与动态交互体验。</p>
+        </div>
+
+        <!-- Download Card -->
+        <section class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <span class="material-symbols-rounded">download</span>
+                </div>
+                <div class="card-title">获取客户端</div>
+            </div>
+            <div style="color: var(--text-sub); margin-bottom: 32px; font-size: 1rem;">
+                <p>LaDNS 是一款轻量级、无广告的 DNS 解析工具。支持 Windows 与 Linux，一键配置，即刻享受纯净网络。</p>
+            </div>
+            
+            <button class="btn btn-primary" onclick="startDownload('Windows')">
+                <span class="material-symbols-rounded">desktop_windows</span>
+                Windows 10/11
+            </button>
+            <button class="btn btn-glass" onclick="startDownload('Linux')">
+                <span class="material-symbols-rounded">terminal</span>
+                Linux Binary
+            </button>
+
+            <!-- Advanced Loader -->
+            <div id="download-progress" class="progress-wrapper">
+                <div class="progress-info">
+                    <span id="download-status">正在建立连接...</span>
+                    <span id="download-percent">0%</span>
+                </div>
+                <div class="loader-container">
+                    <div id="progress-bar" class="loader-bar"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DNS Config Card -->
+        <section class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <span class="material-symbols-rounded">settings_ethernet</span>
+                </div>
+                <div class="card-title">BoxLi DNS</div>
+            </div>
+            <div style="color: var(--text-sub); margin-bottom: 32px; font-size: 1rem;">
+                <p>点击下方地址即可复制到剪贴板，请根据您的客户端软件支持的协议进行选择。</p>
+            </div>
+
+            <div class="dns-list">
+                <!-- DoH -->
+                <div class="dns-item" onclick="copyToClipboard('https://ti1s.com/dns-query', 'DoH')">
+                    <div class="dns-icon">
+                        <span class="material-symbols-rounded">lock</span>
+                    </div>
+                    <div class="dns-content">
+                        <div class="dns-label">DoH (HTTPS)</div>
+                        <div class="dns-value">https://ti1s.com/dns-query</div>
+                    </div>
+                    <span class="material-symbols-rounded copy-icon">content_copy</span>
+                </div>
+
+                <!-- DoT -->
+                <div class="dns-item" onclick="copyToClipboard('tls://ti1s.com', 'DoT')">
+                    <div class="dns-icon">
+                        <span class="material-symbols-rounded">vpn_key</span>
+                    </div>
+                    <div class="dns-content">
+                        <div class="dns-label">DoT (TLS)</div>
+                        <div class="dns-value">tls://ti1s.com</div>
+                    </div>
+                    <span class="material-symbols-rounded copy-icon">content_copy</span>
+                </div>
+
+                <!-- DoQ -->
+                <div class="dns-item" onclick="copyToClipboard('quic://ti1s.com:853', 'DoQ')">
+                    <div class="dns-icon">
+                        <span class="material-symbols-rounded">bolt</span>
+                    </div>
+                    <div class="dns-content">
+                        <div class="dns-label">DoQ (QUIC)</div>
+                        <div class="dns-value">quic://ti1s.com:853</div>
+                    </div>
+                    <span class="material-symbols-rounded copy-icon">content_copy</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div>&copy; 2023 JumpStyle - LasDNS Servers. All Rights Reserved.</div>
+            <!-- Load Time Display -->
+            <div class="load-time">
+                <span class="material-symbols-rounded" style="font-size: 14px;">speed</span>
+                <span id="page-load-time">计算中...</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <span class="material-symbols-rounded" style="color: var(--accent);">check_circle</span>
+        <span id="toast-message">已复制到剪贴板</span>
+    </div>
+
+    <script>
+        // Record start time
+        const startTime = performance.now();
+
+        // --- Bing Wallpaper Logic (Fixed: Direct URL Assignment) ---
+        function initBingWallpaper() {
+            const bgElement = document.getElementById('bing-bg');
+            const isPortrait = window.innerHeight > window.innerWidth;
+            const orientation = isPortrait ? 'portrait' : 'landscape';
+            const cacheKey = `bing_bg_url_${orientation}`;
+            const cacheDuration = 24 * 60 * 60 * 1000; // 1 day in ms
+
+            // 1. Check URL Cache (LocalStorage)
+            let finalUrl = '';
+            const now = Date.now();
+            let useCache = false;
+
+            try {
+                const cachedData = localStorage.getItem(cacheKey);
+                if (cachedData) {
+                    const { url, timestamp } = JSON.parse(cachedData);
+                    // If cache is valid (less than 1 day old)
+                    if (now - timestamp < cacheDuration) {
+                        console.log('Using cached wallpaper URL');
+                        finalUrl = url;
+                        useCache = true;
+                    } else {
+                        console.log('Cache expired, fetching new URL...');
+                        localStorage.removeItem(cacheKey);
+                    }
+                }
+            } catch (e) {
+                console.warn('Cache access failed', e);
+            }
+
+            // 2. Determine API URL if not cached
+            if (!useCache) {
+                const baseUrl = isPortrait 
+                    ? 'https://bing.kuzhan.cc/api/m.php' 
+                    : 'https://bing.kuzhan.cc/api/uhd.php';
+                
+                // Add a timestamp to prevent browser caching of the image itself if we wanted to force refresh,
+                // but here we just use the base URL to let the browser handle standard caching.
+                // To ensure we get a NEW image if the cache is old, we append a random param if needed,
+                // but usually Bing APIs handle daily rotation by URL params.
+                // We will use the URL directly.
+                finalUrl = baseUrl;
+
+                // Save new URL to cache
+                try {
+                    localStorage.setItem(cacheKey, JSON.stringify({
+                        url: finalUrl,
+                        timestamp: now
+                    }));
+                } catch (e) {
+                    console.warn('Failed to cache URL', e);
+                }
+            }
+
+            // 3. Apply Background
+            // We use an Image object to preload and detect load
+            const img = new Image();
+            img.src = finalUrl;
+            img.onload = () => {
+                bgElement.style.backgroundImage = `url('${finalUrl}')`;
+                bgElement.style.opacity = 1;
+            };
+            img.onerror = () => {
+                console.error('Failed to load wallpaper');
+                // Fallback color if image fails
+                bgElement.style.backgroundColor = '#050508';
+                bgElement.style.opacity = 1;
+            };
+        }
+
+        // Initialize Wallpaper on Load
+        window.addEventListener('load', initBingWallpaper);
+
+
+        // --- App Logic ---
+
+        function startDownload(os) {
+            const container = document.getElementById('download-progress');
+            const bar = document.getElementById('progress-bar');
+            const status = document.getElementById('download-status');
+            const percent = document.getElementById('download-percent');
+            
+            container.style.display = 'block';
+            bar.style.width = '0%';
+            status.innerText = `正在与 ${os} 服务器握手...`;
+            percent.innerText = '0%';
+
+            setTimeout(() => {
+                status.innerText = '正在验证文件完整性...';
+                let width = 0;
+                const interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        status.innerText = '下载完成，正在解压...';
+                        percent.innerText = '100%';
+                        bar.style.width = '100%';
+                        showToast(`${os} 客户端下载已开始`);
+                        
+                        setTimeout(() => {
+                            container.style.display = 'none';
+                        }, 3000);
+                    } else {
+                        width += Math.random() * 5;
+                        if (width > 100) width = 100;
+                        bar.style.width = width + '%';
+                        percent.innerText = Math.floor(width) + '%';
+                        
+                        if(width > 30 && width < 60) status.innerText = '高速数据传输中...';
+                        if(width > 60 && width < 90) status.innerText = '即将完成...';
+                    }
+                }, 100);
+            }, 1000);
+        }
+
+        function copyToClipboard(text, type) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`已复制 ${type} 地址`);
+            }).catch(err => {
+                showToast('复制失败');
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const msgSpan = document.getElementById('toast-message');
+            msgSpan.innerText = msg;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Calculate Load Time
+        window.addEventListener('load', () => {
+            const endTime = performance.now();
+            const loadTime = (endTime - startTime).toFixed(2);
+            const loadTimeElement = document.getElementById('page-load-time');
+            
+            if(loadTimeElement) {
+                loadTimeElement.innerText = `页面生成耗时: ${loadTime} ms`;
+            }
+        });
+    </script>
+</body>
+</html>
